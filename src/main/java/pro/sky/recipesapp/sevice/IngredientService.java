@@ -2,11 +2,9 @@ package pro.sky.recipesapp.sevice;
 
 import org.springframework.stereotype.Service;
 import pro.sky.recipesapp.dto.IngredientDTO;
-import pro.sky.recipesapp.dto.RecipeDTO;
 import pro.sky.recipesapp.exceptions.IngredientNotFoundExeption;
-import pro.sky.recipesapp.exceptions.RecipeNotFoundException;
 import pro.sky.recipesapp.model.Ingredient;
-import pro.sky.recipesapp.model.Recipe;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
