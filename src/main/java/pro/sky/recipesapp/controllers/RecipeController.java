@@ -35,7 +35,7 @@ public class RecipeController {
     public RecipeDTO addRecipe(@RequestBody Recipe recipe){
         return recipeService.addRecipe(recipe);
 }
-@PutMapping
+@PutMapping("/{id}")
 @Operation(description = "редактирование рецепта")
     public RecipeDTO editRecipe(@PathVariable("id") int id, @RequestBody Recipe recipe){
         return recipeService.updateRecipe(id, recipe);

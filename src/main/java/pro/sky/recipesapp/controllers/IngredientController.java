@@ -13,9 +13,9 @@ import java.util.List;
 @RequestMapping("/ingredient")
 @Tag(name = "ингридиенты", description = "операции с ингридиентами")
 public class IngredientController {
-    public final IngredientController ingredientService;
+    public final IngredientService ingredientService;
 
-    public IngredientController(IngredientController ingredientService) {
+    public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
     }
     @GetMapping
@@ -34,7 +34,7 @@ public class IngredientController {
     public IngredientDTO addIngredient(@RequestBody Ingredient ingredient){
         return ingredientService.addIngredient(ingredient);
     }
-    @PutMapping
+    @PutMapping("/{id}")
     @Operation(description = "редактирование ингридиента")
     public IngredientDTO editIngredient(@PathVariable("id") int id, @RequestBody Ingredient ingredient){
         return ingredientService.updateIngredient(id, ingredient);
