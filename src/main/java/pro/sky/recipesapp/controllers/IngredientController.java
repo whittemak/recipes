@@ -7,6 +7,7 @@ import pro.sky.recipesapp.dto.IngredientDTO;
 import pro.sky.recipesapp.model.Ingredient;
 import pro.sky.recipesapp.sevice.IngredientService;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -31,17 +32,17 @@ public class IngredientController {
     }
     @PostMapping
     @Operation(description = "добавление ингридиента")
-    public IngredientDTO addIngredient(@RequestBody Ingredient ingredient){
+    public IngredientDTO addIngredient(@RequestBody Ingredient ingredient) throws IOException {
         return ingredientService.addIngredient(ingredient);
     }
     @PutMapping("/{id}")
     @Operation(description = "редактирование ингридиента")
-    public IngredientDTO editIngredient(@PathVariable("id") int id, @RequestBody Ingredient ingredient){
+    public IngredientDTO editIngredient(@PathVariable("id") int id, @RequestBody Ingredient ingredient) throws IOException {
         return ingredientService.updateIngredient(id, ingredient);
     }
     @DeleteMapping("/{id}")
     @Operation(description = "удаление ингридиента по айди")
-    public IngredientDTO deleteIngredient(@PathVariable("id") int id){
+    public IngredientDTO deleteIngredient(@PathVariable("id") int id) throws IOException {
         return ingredientService.deleteById(id);
     }
 }
