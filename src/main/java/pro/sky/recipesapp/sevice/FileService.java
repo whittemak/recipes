@@ -1,21 +1,21 @@
 package pro.sky.recipesapp.sevice;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.Path;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import pro.sky.recipesapp.model.Ingredient;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Map;
 
 @Service
 public class FileService {
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private final Path filesDir;
-    public FileService(ObjectMapper objectMapper, @Value("${app.files.dir}") Path filesDir) {
-        this.objectMapper = objectMapper;
+    public <objectMapper> FileService(@Value("${app.files.dir}") Path filesDir) {
         this.filesDir = filesDir;
     }
     public <T> void saveToFile(String fileName, T objectToSave) throws IOException {
@@ -31,18 +31,16 @@ public class FileService {
         }
 
     }
-    public <T> T readFromFile(String fileName, TypeReference<T> typeReference){
+    public <T> void readFromFile(String fileName, Map<Integer, Ingredient> typeReference){
         Path filePath = filesDir.resolve(fileName + ".json");
         if (!Files.exists(filePath)){
-            return  null;
+            return;
         }
         try {
             String jsonString = Files.readString(filePath);
-            T obj = objectMapper.readValue(jsonString, typeReference);
-            return obj;
+            T obj = objectMapper.readValue(jsonString, (JavaType) typeReference);
         } catch (IOException e){
             e.printStackTrace();
-            return null;
         }
     }
 }

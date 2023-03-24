@@ -25,7 +25,7 @@ public class IngredientService {
     }
     @PostConstruct
     private void init(){
-        readFromFile();
+        this.fileService.readFromFile(STORE_FILE_NAME, this.ingredients);
     }
 
     public IngredientDTO addIngredient(Ingredient ingredient) throws IOException {
