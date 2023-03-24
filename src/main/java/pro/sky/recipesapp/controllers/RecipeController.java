@@ -46,4 +46,5 @@ public class RecipeController {
     public RecipeDTO deleteRecipe(@PathVariable("id") int id) throws IOException {
         return recipeService.deleteById(id);
 }
+
 }

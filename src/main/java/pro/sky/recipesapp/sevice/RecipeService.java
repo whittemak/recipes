@@ -2,12 +2,14 @@ package pro.sky.recipesapp.sevice;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.annotation.PostConstruct;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import pro.sky.recipesapp.dto.RecipeDTO;
 import pro.sky.recipesapp.exceptions.RecipeNotFoundException;
 import pro.sky.recipesapp.model.Recipe;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.Map;
 public class RecipeService {
     private final static String STORE_FILE_NAME = "recipes";
     private int idCounter = 0;
-    private final Map<Integer, Recipe> recipes = new HashMap<>();
+    private  Map<Integer, Recipe> recipes = new HashMap<>();
     private final FileService fileService;
 
     public RecipeService(FileService fileService) {
@@ -69,6 +71,15 @@ public class RecipeService {
         }
         this.fileService.saveToFile(STORE_FILE_NAME, this.recipes);
         return RecipeDTO.from(id, existingRecipe);
+    }
+    public Resource getRecipesFiles(){
+        return fileService.getResource(STORE_FILE_NAME);
+    }
+    public void importRecipes(Resource resource){
+        fileService.saveResource(STORE_FILE_NAME, resource);
+        this.recipes = fileService.readFromFile(STORE_FILE_NAME, new TypeReference<>() {
+        });
+
     }
 }
 

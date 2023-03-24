@@ -5,11 +5,14 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.Path;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import pro.sky.recipesapp.model.Recipe;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Map;
 
 @Service
@@ -45,5 +48,19 @@ public class FileService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public Resource getResource(String fileName) {
+        Path filePath = filesDir.resolve(fileName + ".json");
+        return new FileSystemResource(filePath);
+    }
+    public void saveResource(String fileName, Resource resource){
+        Path filePath = filesDir.resolve(fileName + ".json");
+        try {
+            Files.copy(resource.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

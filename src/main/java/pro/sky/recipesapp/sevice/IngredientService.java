@@ -2,6 +2,7 @@ package pro.sky.recipesapp.sevice;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.annotation.PostConstruct;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import pro.sky.recipesapp.dto.IngredientDTO;
 import pro.sky.recipesapp.exceptions.IngredientNotFoundExeption;
@@ -19,7 +20,7 @@ public class IngredientService {
     private final static String STORE_FILE_NAME = "ingredients";
     private final FileService fileService;
     private int idCounter = 0;
-    private final Map<Integer, Ingredient> ingredients = new HashMap<>();
+    private  Map<Integer, Ingredient> ingredients = new HashMap<>();
 
     public IngredientService(FileService fileService) {
         this.fileService = fileService;
@@ -67,6 +68,12 @@ public class IngredientService {
         }
         this.fileService.saveToFile(STORE_FILE_NAME, this.ingredients);
         return IngredientDTO.from(id, existingIngredient);
+    }
+    public void importIngredients(Resource resource){
+        fileService.saveResource(STORE_FILE_NAME, resource);
+        this.ingredients = fileService.readFromFile(STORE_FILE_NAME, new TypeReference<>() {
+        });
+
     }
 }
 
