@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.Path;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import pro.sky.recipesapp.model.Ingredient;
+import pro.sky.recipesapp.model.Recipe;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -31,7 +31,7 @@ public class FileService {
         }
 
     }
-    public <T> void readFromFile(String fileName, Map<Integer, Ingredient> typeReference){
+    public <T> void readFromFile(String fileName, Map<Integer, Recipe> typeReference){
         Path filePath = filesDir.resolve(fileName + ".json");
         if (!Files.exists(filePath)){
             return;
