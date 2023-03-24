@@ -1,5 +1,6 @@
 package pro.sky.recipesapp.sevice;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import pro.sky.recipesapp.dto.IngredientDTO;
@@ -25,7 +26,8 @@ public class IngredientService {
     }
     @PostConstruct
     private void init(){
-        this.fileService.readFromFile(STORE_FILE_NAME, this.ingredients);
+        this.fileService.readFromFile(STORE_FILE_NAME, new TypeReference<>() {
+        });
     }
 
     public IngredientDTO addIngredient(Ingredient ingredient) throws IOException {

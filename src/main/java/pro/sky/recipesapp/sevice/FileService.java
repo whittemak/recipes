@@ -1,5 +1,6 @@
 package pro.sky.recipesapp.sevice;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.file.Path;
@@ -31,16 +32,18 @@ public class FileService {
         }
 
     }
-    public <T> void readFromFile(String fileName, Map<Integer, Recipe> typeReference){
+    public <T> T readFromFile(String fileName, TypeReference<T> typeReference){
         Path filePath = filesDir.resolve(fileName + ".json");
         if (!Files.exists(filePath)){
-            return;
+            return null;
         }
         try {
             String jsonString = Files.readString(filePath);
-            T obj = objectMapper.readValue(jsonString, (JavaType) typeReference);
+            T obj = objectMapper.readValue(jsonString, typeReference);
+            return obj;
         } catch (IOException e){
             e.printStackTrace();
+            return null;
         }
     }
 }
